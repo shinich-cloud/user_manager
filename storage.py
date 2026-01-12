@@ -1,7 +1,7 @@
 import json
 from typing import List, Dict
 
-FILE_NAME = "users.json"
+FILE_NAME = "logs.json"
 
 
 def load_users() -> List[Dict]:

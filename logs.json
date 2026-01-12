@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "dfsfs",
+    "password": "a47c3d2fb0d7d6385200b3f27e4b81ab77a6f0032b564df8c6ae5e2536b35b78",
+    "role": "user"
+  },
+  {
+    "id": 2,
+    "username": "fsd",
+    "password": "3b38d05fc8d7e3d62e7f728b974886d2fa4378dad80734725644c56a639d9557",
+    "role": "user"
+  },
+  {
+    "id": 3,
+    "username": "qeqweq",
+    "password": "541ba454676e5caf189479400a65d1fca03ef94303541757ad54ad08ce857e6b",
+    "role": "user"
+  }
+]
