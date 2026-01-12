@@ -16,5 +16,11 @@
     "username": "qeqweq",
     "password": "541ba454676e5caf189479400a65d1fca03ef94303541757ad54ad08ce857e6b",
     "role": "user"
+  },
+  {
+    "id": 4,
+    "username": "123",
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "role": "user"
   }
 ]
