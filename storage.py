@@ -1,17 +1,16 @@
 import json
-from typing import List, Dict
 
-FILE_NAME = "logs.json"
+USERS_FILE = "users.json"
 
 
-def load_users() -> List[Dict]:
+def load_users() -> list:
     try:
-        with open(FILE_NAME, "r", encoding="utf-8") as file:
-            return json.load(file)
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
     except FileNotFoundError:
         return []
 
 
-def save_users(users: List[Dict]) -> None:
-    with open(FILE_NAME, "w", encoding="utf-8") as file:
-        json.dump(users, file, indent=2, ensure_ascii=False)
+def save_users(users: list) -> None:
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=2)

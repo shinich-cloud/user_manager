@@ -1,16 +1,4 @@
-# Python
 __pycache__/
 *.pyc
-*.pyo
-
-# Virtual environment
-venv/
-.venv/
-
-# IDE
-.vs/
-.idea/
-.vscode/
-
-# Env
-.env
+users.json
+audit_logs.json

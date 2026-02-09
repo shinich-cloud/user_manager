@@ -14,37 +14,36 @@ def main():
             choice = input("Выбор: ")
 
             if choice == "1":
-                username = input("Имя пользователя: ")
-                password = input("Пароль: ")
-                register(username, password)
-
+                register(input("Имя: "), input("Пароль: "))
             elif choice == "2":
-                username = input("Имя пользователя: ")
-                password = input("Пароль: ")
-                current_user = login(username, password)
-
+                current_user = login(input("Имя: "), input("Пароль: "))
             elif choice == "0":
-                print("👋 Пока!")
                 break
-
         else:
             print(f"\n--- Меню ({current_user['role']}) ---")
-            print("1. Список пользователей (admin)")
-            print("2. Назначить роль (admin)")
-            print("3. Выйти из аккаунта")
+
+            print("1. Выйти из аккаунта")
+
+            if current_user["role"] in ("admin", "moderator"):
+                print("2. Список пользователей")
+
+            if current_user["role"] == "admin":
+                print("3. Назначить роль")
 
             choice = input("Выбор: ")
 
             if choice == "1":
+                current_user = None
+
+            elif choice == "2" and current_user["role"] in ("admin", "moderator"):
                 list_users(current_user)
 
-            elif choice == "2":
-                user_id = int(input("ID пользователя: "))
-                role = input("Новая роль (user/admin): ")
-                set_role(current_user, user_id, role)
-
-            elif choice == "3":
-                current_user = None
+            elif choice == "3" and current_user["role"] == "admin":
+                set_role(
+                    current_user,
+                    int(input("ID пользователя: ")),
+                    input("Новая роль (user/moderator/admin): ")
+                )
 
 
 if __name__ == "__main__":

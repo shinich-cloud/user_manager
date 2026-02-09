@@ -1,0 +1,10 @@
+# Changelog
+
+## [v2.0.0]
+### Added
+- Роли admin и moderator
+- Audit-log
+
+## [v1.0.0]
+### Added
+- Регистрация и вход
