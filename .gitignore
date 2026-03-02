@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
-users.json
 audit_logs.json
+.env
 .vs/
+.idea/
