@@ -4,12 +4,12 @@
 Хранение данных — PostgreSQL.
 
 ## Технологии
--Python
--FastAPI
--PostgreSQL
--psycopg2
--Uvicorn
--Git
+- Python
+- FastAPI
+- PostgreSQL
+- psycopg2
+- Uvicorn
+- Git
 
 ## Что есть в проекте
 
