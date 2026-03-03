@@ -3,6 +3,14 @@
 Учебный backend-проект на Python: управление пользователями, роли и небольшой API на FastAPI.  
 Хранение данных — PostgreSQL.
 
+##Технологии
+-Python
+-FastAPI
+-PostgreSQL
+-psycopg2
+-Uvicorn
+-Git
+
 ## Что есть в проекте
 
 - регистрация и вход
