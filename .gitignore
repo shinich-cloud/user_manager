@@ -1,8 +1,24 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+
+# VS / VS Code
 .vs/
-.idea/
+.vscode/
+
+# Env files
 .env
+
+# Logs / generated files
 audit_logs.json
-*.audit_logs
+logs.json
+
+# OS
 .DS_Store
+Thumbs.db
