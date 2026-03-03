@@ -1,6 +1,8 @@
 __pycache__/
 *.pyc
-audit_logs.json
-.env
 .vs/
 .idea/
+.env
+audit_logs.json
+*.audit_logs
+.DS_Store
