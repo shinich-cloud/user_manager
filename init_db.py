@@ -1,10 +1,8 @@
-from db import get_conn
+from app.database import Base, engine
+from app import models
 
 def main():
-    with get_conn() as conn:
-        with conn.cursor() as cur:
-            cur.execute(open("schema.sql", "r", encoding="utf-8").read())
-        conn.commit()
+    Base.metadata.create_all(bind=engine)
     print("OK")
 
 if __name__ == "__main__":

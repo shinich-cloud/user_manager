@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS users (
-    id BIGSERIAL PRIMARY KEY,
-    username VARCHAR(100) UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    role VARCHAR(20) NOT NULL
-);

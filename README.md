@@ -1,14 +1,17 @@
 # User Manager
 
-Educational backend project written in Python for managing users and roles.  
-The project exposes a small API built with FastAPI and stores data in PostgreSQL.
+Educational backend project for managing users and roles.  
+The project provides an API built with FastAPI and stores data in PostgreSQL.
 
 ## Technologies
+
 - Python
 - FastAPI
 - PostgreSQL
-- psycopg2
-- Uvicorn
+- SQLAlchemy
+- JWT
+- Redis
+- Docker
 - Git
 
 ## Features
@@ -16,9 +19,13 @@ The project exposes a small API built with FastAPI and stores data in PostgreSQL
 - user registration and login
 - roles: `user / moderator / admin`
 - password hashing
-- list users (based on role)
+- JWT authorization
+- list users with pagination
+- search users by username
 - change user roles (admin only)
-- audit log
+- audit logs
+- healthcheck endpoint
+- Redis cache
 
 ## Quick Start
 
@@ -32,22 +39,20 @@ python -m pip install -r requirements.txt
 
 Create a database named `user_manager`.
 
-You can configure connection in two ways.
+You can configure the connection in two ways.
 
 #### Option A: Environment variables (Windows PowerShell)
 
 ```powershell
-$env:PGHOST="localhost"
-$env:PGPORT="5432"
-$env:PGDATABASE="user_manager"
-$env:PGUSER="postgres"
-$env:PGPASSWORD="<your_postgres_password>"
+$env:DATABASE_URL="postgresql+psycopg2://postgres:<your_postgres_password>@localhost:5432/user_manager"
+$env:JWT_SECRET_KEY="change_me_secret_key"
+$env:REDIS_URL="redis://localhost:6379/0"
 ```
 
-#### Option B: Using .env (recommended)
+#### Option B: Using `.env` (recommended)
 
-1) Copy `.env.example` to `.env`  
-2) Fill in your own values (password should not be pushed to GitHub)
+1. Copy `.env.example` to `.env`
+2. Fill in your own values
 
 ### 3) Create database tables
 
@@ -67,106 +72,127 @@ http://127.0.0.1:8000/docs
 
 ## Authorization
 
-Protected endpoints require headers:
+Protected endpoints use Bearer token authentication.
 
-- `X-Auth-Username`
-- `X-Auth-Password`
+### Login example
+
+```bash
+curl -X POST "http://127.0.0.1:8000/login" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"username\": \"admin\", \"password\": \"1234\"}"
+```
+
+After login use the token in:
+
+```text
+Authorization: Bearer <token>
+```
 
 ## Endpoints
 
 - `POST /register`
 - `POST /login`
-- `GET /users` (admin/moderator)
-- `PATCH /users/{id}/role` (admin)
+- `GET /users`
+- `GET /users/me`
+- `PATCH /users/{id}/role`
+- `GET /users/logs`
+- `GET /health`
 
-## Example Requests
+## Project Structure
 
-### Register
-
-```bash
-curl -X POST "http://127.0.0.1:8000/register" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"username\": \"test\", \"password\": \"1234\"}"
-```
-
-### List users
-
-```bash
-curl -X GET "http://127.0.0.1:8000/users" ^
-  -H "X-Auth-Username: admin" ^
-  -H "X-Auth-Password: 1234"
-```
-
-### Change role
-
-```bash
-curl -X PATCH "http://127.0.0.1:8000/users/2/role" ^
-  -H "Content-Type: application/json" ^
-  -H "X-Auth-Username: admin" ^
-  -H "X-Auth-Password: 1234" ^
-  -d "{\"role\": \"moderator\"}"
+```text
+user_manager/
+  app/
+    core/
+      config.py
+    routers/
+      auth.py
+      users.py
+    __init__.py
+    cache.py
+    database.py
+    deps.py
+    main.py
+    models.py
+    schemas.py
+    security.py
+  .env.example
+  .gitignore
+  CHANGELOG.md
+  docker-compose.yml
+  Dockerfile
+  init_db.py
+  README.md
+  requirements.txt
 ```
 
 ---
 
+# Русская версия
+
 # User Manager
 
-Учебный backend-проект на Python: управление пользователями, роли и небольшой API на FastAPI.  
-Хранение данных — PostgreSQL.
+Учебный backend-проект для управления пользователями и ролями.  
+Проект предоставляет API на FastAPI и использует PostgreSQL для хранения данных.
 
 ## Технологии
+
 - Python
 - FastAPI
 - PostgreSQL
-- psycopg2
-- Uvicorn
+- SQLAlchemy
+- JWT
+- Redis
+- Docker
 - Git
 
-## Что есть в проекте
+## Возможности
 
-- регистрация и вход
+- регистрация и вход пользователей
 - роли: `user / moderator / admin`
 - хеширование паролей
-- просмотр пользователей (по роли)
-- смена ролей (только admin)
-- audit log
+- JWT авторизация
+- список пользователей с пагинацией
+- поиск пользователей по имени
+- изменение ролей (только admin)
+- audit logs
+- healthcheck endpoint
+- Redis cache
 
 ## Быстрый старт
 
-### 1) Установка зависимостей
+### 1) Установить зависимости
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### 2) Настройка PostgreSQL
+### 2) Настроить PostgreSQL
 
 Создай базу данных `user_manager`.
 
-Дальше есть два варианта:
+Можно настроить подключение двумя способами.
 
-#### Вариант A: через переменные окружения (Windows PowerShell)
+#### Вариант A: переменные окружения (Windows PowerShell)
 
 ```powershell
-$env:PGHOST="localhost"
-$env:PGPORT="5432"
-$env:PGDATABASE="user_manager"
-$env:PGUSER="postgres"
-$env:PGPASSWORD="<your_postgres_password>"
+$env:DATABASE_URL="postgresql+psycopg2://postgres:<your_postgres_password>@localhost:5432/user_manager"
+$env:JWT_SECRET_KEY="change_me_secret_key"
+$env:REDIS_URL="redis://localhost:6379/0"
 ```
 
-#### Вариант B: через .env (удобнее)
+#### Вариант B: через `.env` (рекомендуется)
 
-1) Скопируй файл `.env.example` в `.env`  
-2) Впиши свои значения (пароль не пушится в GitHub)
+1. Скопируй `.env.example` в `.env`
+2. Заполни свои значения
 
-### 3) Создание таблиц
+### 3) Создать таблицы
 
 ```bash
 python init_db.py
 ```
 
-### 4) Запуск API (FastAPI)
+### 4) Запустить API
 
 ```bash
 python -m uvicorn app.main:app --reload
@@ -174,71 +200,32 @@ python -m uvicorn app.main:app --reload
 
 Swagger UI:
 
-- http://127.0.0.1:8000/docs
+http://127.0.0.1:8000/docs
 
-## Авторизация для защищённых эндпоинтов
+## Авторизация
 
-Для защищённых запросов используются заголовки:
+Защищённые эндпоинты используют Bearer token.
 
-- `X-Auth-Username`
-- `X-Auth-Password`
+### Пример логина
+
+```bash
+curl -X POST "http://127.0.0.1:8000/login" ^
+  -H "Content-Type: application/json" ^
+  -d "{\"username\": \"admin\", \"password\": \"1234\"}"
+```
+
+После логина используй токен в заголовке:
+
+```text
+Authorization: Bearer <token>
+```
 
 ## Эндпоинты
 
 - `POST /register`
 - `POST /login`
-- `GET /users` (admin/moderator)
-- `PATCH /users/{id}/role` (admin)
-
-## Примеры запросов
-
-### Регистрация
-
-```bash
-curl -X POST "http://127.0.0.1:8000/register" ^
-  -H "Content-Type: application/json" ^
-  -d "{\"username\": \"test\", \"password\": \"1234\"}"
-```
-
-### Список пользователей (нужны заголовки)
-
-```bash
-curl -X GET "http://127.0.0.1:8000/users" ^
-  -H "X-Auth-Username: admin" ^
-  -H "X-Auth-Password: 1234"
-```
-
-### Смена роли (admin)
-
-```bash
-curl -X PATCH "http://127.0.0.1:8000/users/2/role" ^
-  -H "Content-Type: application/json" ^
-  -H "X-Auth-Username: admin" ^
-  -H "X-Auth-Password: 1234" ^
-  -d "{\"role\": \"moderator\"}"
-```
-
-## Структура проекта
-
-```text
-user_manager/
-  app/
-    __init__.py
-    main.py
-    schemas.py
-  audit_log.py
-  db.py
-  init_db.py
-  main.py
-  storage.py
-  users.py
-  schema.sql
-  requirements.txt
-  CHANGELOG.md
-  README.md
-  .gitignore
-```
-
-## Версии
-
-История изменений — в `CHANGELOG.md`.
+- `GET /users`
+- `GET /users/me`
+- `PATCH /users/{id}/role`
+- `GET /users/logs`
+- `GET /health`

@@ -1,45 +1,28 @@
-## v4 - FastAPI version
+# Changelog
 
-### Added
-- REST API на FastAPI
-- эндпоинты для регистрации и входа
-- Pydantic схемы
-- запуск через Uvicorn
+## v5.0.0
 
-### Changed
-- структура проекта (добавлена папка app)
-- логика работы с пользователями перенесена в API
+- added SQLAlchemy
+- added JWT authorization
+- added Docker and docker-compose
+- added Redis cache
+- added pagination and search for users
+- added health endpoint
+- moved audit logs to PostgreSQL
 
----
+## v4.0.0
 
-## v3 - PostgreSQL version
+- added FastAPI API
+- added Swagger docs
 
-### Added
-- подключение PostgreSQL
-- файл db.py для работы с базой данных
-- schema.sql для создания таблиц
-- init_db.py для инициализации базы
+## v3.0.0
 
-### Changed
-- хранение пользователей перенесено из JSON в PostgreSQL
+- moved project to PostgreSQL
 
----
+## v2.0.0
 
-## v2 - Roles system
+- added roles and audit log
 
-### Added
-- роли пользователей:
-  - user
-  - moderator
-  - admin
-- разграничение прав
-- audit log
+## v1.0.0
 
----
-
-## v1 - Initial version
-
-### Added
-- регистрация пользователей
-- вход в систему
-- хранение пользователей в JSON
+- initial user manager version

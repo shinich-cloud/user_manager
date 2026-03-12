@@ -4,21 +4,39 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Virtual env
-.venv/
+# Virtual environment
 venv/
+.env/
 
-# VS / VS Code
-.vs/
-.vscode/
-
-# Env files
+# Environment variables
 .env
+.env.*
 
-# Logs / generated files
-audit_logs.json
-logs.json
+# IDE
+.vscode/
+.idea/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Database
+*.sqlite3
+
+# Redis dump
+dump.rdb
+
+# Python build
+build/
+dist/
+*.egg-info/
+
+# Docker
+docker-data/
+
+# Testing
+.coverage
+.pytest_cache/
